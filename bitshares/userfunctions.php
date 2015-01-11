@@ -118,7 +118,7 @@ function sendToCart($id, $statusCode, $comment)
 	}
 			
 	curl_close($ch);
-	return $response;
+	return json_decode($response, TRUE);
 }
 function getOpenOrdersUser()
 {
