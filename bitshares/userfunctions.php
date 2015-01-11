@@ -185,15 +185,22 @@ function doesOrderExistUser($memo, $order_id)
 function completeOrderUser($order)
 {
 	global $baseURL;
-  $response = sendToCart($order['order_id'], 'P', 'Order paid for');  
-  $response['url'] = $baseURL;
+    $response = sendToCart($order['order_id'], 'P', 'Order paid for');  
+	if(!array_key_exists('error', $response))
+	{	
+		$response['url'] = $baseURL;
+	} 
 	return $response;
 }
 function cancelOrderUser($order)
 {
 	global $baseURL;
-  $response = sendToCart($order['order_id'], 'C', 'Cancelled by user');   
-  $response['url'] = $baseURL;
+  $response = sendToCart($order['order_id'], 'C', 'Cancelled by user'); 
+	if(!array_key_exists('error', $response))
+	{	
+		$response['url'] = $baseURL;
+	}   
+  
 	return $response;
 }
 function cronJobUser()
