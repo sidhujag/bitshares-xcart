@@ -1,45 +1,39 @@
-bitpay/xcartgold-plugin
+bitshares/xcartgold-plugin
 =======================
 
 # Installation
 
-1. Copy these files into your xcart/ directory (e.g. ~/www/xcart/ or ~/www/).  They will not overwrite any existing files.
-2. Run modules/Bitpay/install.sql on your Xcart database (e.g. "mysql -u [user] -p [xcartdb] < install.sql OR copy the contents into phpMyAdmin).
+1. Copy these files into your xcart root directory
+2. Copy Bitshares Checkout (https://github.com/sidhujag/bitsharescheckout) files into your xcart root directory, overwrite any existing files.
+3. Enable REST API plugin from marketplace with a read/write api key. This API is needed to communicate to and from the XCart system.
 
 # Configuration
 
-1. Create an API key at bitpay.com by clicking My Account > API Access Keys > Add New API Key.
-2. In your XCart admin panel, go to Settings > Payment Methods > Payment Gateways.
-3. Change Your Country to All Countries, select Bitpay and click Add.
-4. Click Payment Methods tab, check the box next to Bitpay and click Apply Changes.
-5. In the same Bitpay section click Configure. 
-6. Enter your API key from step 1.
-7. Select a transaction speed. The high speed will send a confirmation as soon as a transaction is received in the bitcoin network (usually a few seconds). A medium speed setting will typically take 10 minutes. The low speed setting usually takes around 1 hour. See the bitpay.com merchant documentation for a full description of the transaction speed settings: https://bitpay.com/downloads/bitpayApi.pdf
-8. Choose the currency that corresponds to your store's currency from the drop-down list.
-9. Click Update.
-
-## Using testnet
-
-If you want to use the bitpay plugin with a testnet account, you will need to modify the file `/modules/Bitpay/bp_lib.php`, changing all instances of `https://bitpay.com` to `https://test.bitpay.com`. When configuring the plugin in step 1, get the API key from your `test.bitpay.com`.
+1. In your XCart admin panel, go to Settings > Payment Methods > Payment Gateways.
+2. Change Your Country to All Countries, select Bitshares and click Add.
+3. Click Payment Methods tab, check the box next to Bitshares and click Apply Changes.
+4. Fill out config.php with appropriate information and configure Bitshares Checkout
+    - See the readme at https://github.com/sidhujag/bitsharescheckout
+    - Set $apiKey to the read/write key you set in installation step #3
+    
+*Note: Turn off any external HTML minification as XCart uses SSI includes to pass dynamic data from PHP to HTML sections. HTML minifiers strip this information out. CDN's such as MaxCDN and Cloudflare will have HTML minification on by default so make sure to check and turn it off. JS/CSS minification and optimization is OK.  
 
 # Usage
 
-When a shopper chooses the Bitcoin payment method, they will be redirected to Bitpay.com where they will pay an invoice.  Bitpay will then notify your Xcart system that the order was paid for.  The customer will be presented with a button to return to your store.  
+When a shopper chooses the Bitshares payment method, they will be redirected to Bitshares Checkout where they will pay an invoice.  Bitshares Checkout will then notify your Xcart system that the order was paid for.  The customer will be redirected back to your store.  
 
 The order status in the admin panel will be "Processed" if payment has been confirmed. 
 
-Note: This extension does not provide a means of automatically pulling a current BTC exchange rate for presenting BTC prices to shoppers.
 
 # Support
 
-## BitPay Support
+## Bitshares Support
 
-* [GitHub Issues](https://github.com/bitpay/xcartgold-plugin/issues)
+* [GitHub Issues](https://github.com/sidhujag/bitshares-xcart/issues)
   * Open an issue if you are having issues with this plugin.
-* [Support](https://support.bitpay.com)
-  * BitPay merchant support documentation
 
-## X-Cart Gold Support
+
+## X-Cart Support
 
 * [Homepage](http://www.x-cart.com/ecommerce-software.html)
 * [Documentation](http://kb.x-cart.com/display/XDD/Definitive+guide)
@@ -53,7 +47,7 @@ To contribute to this project, please fork and submit a pull request.
 
 The MIT License (MIT)
 
-Copyright (c) 2011-2014 BitPay
+Copyright (c) 2011-2014 Bitshares
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
