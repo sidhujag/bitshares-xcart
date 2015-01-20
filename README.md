@@ -3,17 +3,17 @@ bitshares/xcartgold-plugin
 
 # Installation
 
-1. Copy these files into your xcart root directory
-2. Copy Bitshares Checkout (https://github.com/sidhujag/bitsharescheckout) files into your xcart root directory, overwrite any existing files.
-3. Enable REST API plugin from marketplace with a read/write api key. This API is needed to communicate to and from the XCart system.
+1. Copy these files into your xcart root directory<br />
+2. Copy Bitshares Checkout (https://github.com/sidhujag/bitsharescheckout) files into your xcart root directory, overwrite any existing files.<br />
+3. Enable REST API plugin from marketplace with a read/write api key. This API is needed to communicate to and from the XCart system.<br />
 
 # Configuration
 
-1. In your XCart admin panel, go to Settings > Payment Methods > Payment Gateways.
-2. Change Your Country to All Countries, select Bitshares and click Add.
-3. Click Payment Methods tab, check the box next to Bitshares and click Apply Changes.
-4. Fill out config.php with appropriate information and configure Bitshares Checkout
-    - See the readme at https://github.com/sidhujag/bitsharescheckout
+1. In your XCart admin panel, go to Settings > Payment Methods > Payment Gateways.<br />
+2. Change Your Country to All Countries, select Bitshares and click Add.<br />
+3. Click Payment Methods tab, check the box next to Bitshares and click Apply Changes.<br />
+4. Fill out config.php with appropriate information and configure Bitshares Checkout<br />
+    - See the readme at https://github.com/sidhujag/bitsharescheckout<br />
     - Set $apiKey to the read/write key you set in installation step #3
     
 *Note: Turn off any external HTML minification as XCart uses SSI includes to pass dynamic data from PHP to HTML sections. HTML minifiers strip this information out. CDN's such as MaxCDN and Cloudflare will have HTML minification on by default so make sure to check and turn it off. JS/CSS minification and optimization is OK.  
