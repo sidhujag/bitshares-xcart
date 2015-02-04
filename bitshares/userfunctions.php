@@ -3,10 +3,8 @@
 require 'config.php';
 function getOrderCartHelper($id)
 {
-	global $baseURL;
-	global $apiKey;
-
-	$url = $baseURL.'admin.php?target=RESTAPI';
+	
+	$url = baseURL.'admin.php?target=RESTAPI';
   $path = 'order';
   if($id)
   {
@@ -14,7 +12,7 @@ function getOrderCartHelper($id)
   }
 	$datatopost = array (
     "_method" => 'get',
-		"_key" =>	$apiKey,
+		"_key" =>	apiKey,
 		"_path" =>	$path
 		);
   $url = $url.'&'.http_build_query($datatopost);
@@ -87,16 +85,15 @@ function getOrderWithStatusFromCartHelper($id, $response_code)
 
 function sendToCart($id, $statusCode, $comment)
 {
-	global $baseURL;
-	global $apiKey;
+
 	$response_code = $statusCode; // Q=awaiting payment, C=cancelled, P=paid
 	$response_reason = $comment; 
 	$order_id = $id; 
-	$url = $baseURL.'admin.php?target=RESTAPI';
+	$url = baseURL.'admin.php?target=RESTAPI';
 
 	$datatopost = array (
     "_method" => 'put',
-		"_key" =>	$apiKey,
+		"_key" =>	apiKey,
 		"_path" =>	'order/'.$order_id,
 		"model[paymentStatus][code]" => $response_code,
 		"model[adminNotes]" => $response_reason
@@ -140,15 +137,14 @@ function getOpenOrdersUser()
 }
 function isOrderCompleteUser($memo, $order_id)
 {
-	global $accountName;
-	global $hashSalt;
+
   // find orders with id order_id and status id (completed)
 	$result = getOrderWithStatusFromCartHelper($order_id, 'P');
 	foreach ($result as $responseOrder) {
 			$total = $responseOrder['order_total'];
 			$total = number_format((float)$total,2);
 			$asset = btsCurrencyToAsset($responseOrder['currency']);
-			$hash =  btsCreateEHASH($accountName,$order_id, $total, $asset, $hashSalt);
+			$hash =  btsCreateEHASH(accountName,$order_id, $total, $asset, hashSalt);
 			$memoSanity = btsCreateMemo($hash);		
 			if($memoSanity === $memo)
 			{	
@@ -159,15 +155,14 @@ function isOrderCompleteUser($memo, $order_id)
 }
 function doesOrderExistUser($memo, $order_id)
 {
-	global $accountName;
-	global $hashSalt;
+
   // find orders with id order_id and status id (not paid)
 	$result = getOrderWithStatusFromCartHelper($order_id, 'Q');
 	foreach ($result as $responseOrder) {
 			$total = $responseOrder['order_total'];
 			$total = number_format((float)$total,2);
 			$asset = btsCurrencyToAsset($responseOrder['currency']);
-			$hash =  btsCreateEHASH($accountName,$order_id, $total, $asset, $hashSalt);
+			$hash =  btsCreateEHASH(accountName,$order_id, $total, $asset, hashSalt);
       $memoSanity = btsCreateMemo($hash);
 			if($memoSanity === $memo)
 			{	
@@ -184,21 +179,21 @@ function doesOrderExistUser($memo, $order_id)
 
 function completeOrderUser($order)
 {
-	global $baseURL;
+	
     $response = sendToCart($order['order_id'], 'P', 'Order paid for');  
 	if(!array_key_exists('error', $response))
 	{	
-		$response['url'] = $baseURL;
+		$response['url'] = baseURL;
 	} 
 	return $response;
 }
 function cancelOrderUser($order)
 {
-	global $baseURL;
+	
   $response = sendToCart($order['order_id'], 'C', 'Cancelled by user'); 
 	if(!array_key_exists('error', $response))
 	{	
-		$response['url'] = $baseURL;
+		$response['url'] = baseURL;
 	}   
   
 	return $response;
@@ -210,16 +205,14 @@ function cronJobUser()
 function createOrderUser()
 {
 
-	global $accountName;
-	global $hashSalt;
 
 	$order_id    = $_REQUEST['order_id'];
 	$asset = btsCurrencyToAsset($_REQUEST['code']);
 	$total = number_format((float)$_REQUEST['total'],2);
-	$hash =  btsCreateEHASH($accountName,$order_id, $total, $asset, $hashSalt);
+	$hash =  btsCreateEHASH(accountName,$order_id, $total, $asset, hashSalt);
 	$memo = btsCreateMemo($hash);
 	$ret = array(
-		'accountName'     => $accountName,
+		'accountName'     => accountName,
 		'order_id'     => $order_id,
 		'memo'     => $memo
 	);

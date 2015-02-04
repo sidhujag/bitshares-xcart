@@ -1,12 +1,12 @@
 <?php
 define('ROOT', __DIR__ .DIRECTORY_SEPARATOR);
-$baseURL = 'http://www.bitsharesdemo.com/xcart/';
-$accountName = 'opencartdemo';
-$rpcUser = 'user';
-$rpcPass = 'pass';
-$rpcPort = 1234;
-$demoMode = TRUE;
-$hashSalt = 'xcartdemo'; // see README
-$cronToken = 'asdfs3dddf43'; // see README
-$apiKey = 'rest-api-key';
+define('baseURL', 'http://www.bitsharesdemo.com/xcart/');
+define('accountName', 'opencartdemo');
+define('rpcUser', 'user');
+define('rpcPass', 'pass');
+define('rpcPort', '1234');
+define('demoMode ', TRUE);
+define('hashSalt', 'xcartdemo');
+define('cronToken', 'asdfs3dddf43');
+define('apiKey', 'rest-api-key');
 ?>
