@@ -45,6 +45,7 @@ function getOrderWithStatusFromCartHelper($id, $response_code)
         $total = $responseOrder['total'];
         $order_id = $responseOrder['order_id'];
         $method = $responseOrder['payment_method_name'];
+        $date = $responseOrder['order_date'];
         if($method === 'Bitshares')
         {
           // get order info with id
@@ -57,7 +58,8 @@ function getOrderWithStatusFromCartHelper($id, $response_code)
             $order = array (
               "order_id" => $order_id,
 	            "currency" =>	$currency,
-	            "order_total" =>	$total
+	            "order_total" =>	$total,
+              "order_date" => $date
 	          );
             // add to open orders array for return
             array_push($orders, $order);
@@ -73,7 +75,8 @@ function getOrderWithStatusFromCartHelper($id, $response_code)
         $ret = array (
           "order_id" => $id,
 	        "currency" =>	$response['currency']['code'],
-	        "order_total" =>	$response['total']
+	        "order_total" =>	$response['total'],
+          "order_date" => $response['order_date']
 	      );
         array_push($orders, $ret);
 
@@ -128,9 +131,9 @@ function getOpenOrdersUser()
 		$total = $responseOrder['order_total'];
 		$total = number_format((float)$total,2);		
 		$newOrder['total'] = $total;
-		$newOrder['currency_code'] = $responseOrder['currency'];
+		$newOrder['asset'] = $responseOrder['currency'];
 		$newOrder['order_id'] = $responseOrder['order_id'];
-		$newOrder['date_added'] = 0;
+		$newOrder['date_added'] = $responseOrder['order_date'];
 		array_push($openOrderList,$newOrder);    
 	}
 	return $openOrderList;
@@ -171,6 +174,7 @@ function doesOrderExistUser($memo, $order_id)
 				$order['total'] = $total;
 				$order['asset'] = $asset;
 				$order['memo'] = $memo;	
+        $order['date_added'] = $responseOrder['order_date'];
 				return $order;
 			}
 	}
